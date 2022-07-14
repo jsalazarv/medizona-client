@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="grid grid-cols-1">
-      <div class="">
+      <div>
         <select v-model="customerIndexSelected">
           <option></option>
           <option
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Emit, Vue, Watch } from "vue-property-decorator";
 import CustomerService from "@/services/CustomerService";
 import { IMeta } from "@/services/types";
 import { INoteQueryParams } from "@/services/NoteService/types";
@@ -38,6 +38,7 @@ export default class CustomerPicker extends Vue {
     name: "",
     address: "",
   };
+  public date = new Date();
   public params = {
     query: "",
   };
@@ -62,7 +63,6 @@ export default class CustomerPicker extends Vue {
     this.customerService
       .getAll(filters)
       .then((response) => {
-        console.log(response);
         this.customerList = response.data;
       })
       .catch()
@@ -74,18 +74,23 @@ export default class CustomerPicker extends Vue {
   }
 
   @Watch("customerIndexSelected")
-  selectedCustomer(current: number): ICustomerResponse | undefined {
-    const currentCustomer = this.customerList[current];
+  onChangeCustomerIndex(index: number): ICustomerResponse {
+    const selectedCustomer = this.customerList[index];
 
-    if (currentCustomer) {
-      return (this.customerSelected = currentCustomer);
+    if (selectedCustomer) {
+      return this.setCustomerData(selectedCustomer);
     }
 
-    this.customerSelected = {
+    return this.setCustomerData({
       id: null,
       name: "",
       address: "",
-    };
+    });
+  }
+
+  @Emit("onChangeCustomer")
+  setCustomerData(data: ICustomerResponse): ICustomerResponse {
+    return (this.customerSelected = data);
   }
 
   mounted(): void {
