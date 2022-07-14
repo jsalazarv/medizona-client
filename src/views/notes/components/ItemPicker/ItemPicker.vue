@@ -4,8 +4,8 @@
       <button type="submit" @click="addRow">Add Item</button>
       <div
         class="grid grid-flow-col auto-cols-max"
-        v-for="row in rows"
-        :key="row.name"
+        v-for="(row, indexRow) in rows"
+        :key="indexRow"
       >
         <div class="grid grid-cols-12 gap-2">
           <div class="col-span-3">
@@ -36,10 +36,16 @@
             />
           </div>
           <div class="col-span-3">
-            <button v-if="rows.length >= 1" @click="deleteRow(row)">X</button>
+            <span>{{ row.price * row.quantity }}</span>
+          </div>
+          <div class="col-span-3">
+            <button v-if="rows.length >= 1" @click="deleteRow(indexRow)">
+              X
+            </button>
           </div>
         </div>
       </div>
+      <h2>Total: {{ total }}</h2>
     </div>
   </div>
 </template>
@@ -108,6 +114,14 @@ export default class ItemPicker extends Vue {
 
   deleteRow(index: number): void {
     this.rows.splice(index, 1);
+  }
+
+  get total(): number {
+    let total = 0;
+    for (const row of this.rows) {
+      total += row.price * row.quantity;
+    }
+    return total;
   }
 
   mounted(): void {
