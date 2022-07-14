@@ -7,8 +7,8 @@
         v-for="(row, indexRow) in rows"
         :key="indexRow"
       >
-        <div class="grid grid-cols-12 gap-2">
-          <div class="col-span-3">
+        <div class="grid grid-cols-5 gap-2">
+          <div>
             <select v-model="row.price">
               <option
                 v-for="(item, index) in items"
@@ -19,7 +19,7 @@
               </option>
             </select>
           </div>
-          <div class="col-span-3">
+          <div>
             <input
               type="text"
               placeholder="Price"
@@ -27,7 +27,7 @@
               readonly
             />
           </div>
-          <div class="col-span-3">
+          <div>
             <input
               type="number"
               placeholder="Quantity"
@@ -35,10 +35,10 @@
               min="1"
             />
           </div>
-          <div class="col-span-3">
+          <div>
             <span>{{ row.price * row.quantity }}</span>
           </div>
-          <div class="col-span-3">
+          <div>
             <button v-if="rows.length >= 1" @click="deleteRow(indexRow)">
               X
             </button>

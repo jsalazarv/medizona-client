@@ -3,8 +3,10 @@
     <div class="container w-screen">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden">
-          <h1>Create note</h1>
-          <ItemPicker />
+          <div class="grid grid-cols-2">
+            <CustomerPicker />
+            <ItemPicker />
+          </div>
         </div>
       </div>
     </div>
@@ -15,9 +17,10 @@
 import { Vue } from "vue-property-decorator";
 import Component from "vue-class-component";
 import ItemPicker from "@/views/notes/components/ItemPicker/ItemPicker.vue";
+import CustomerPicker from "@/views/notes/components/CustomerPicker/CustomerPicker.vue";
 
 @Component({
-  components: { ItemPicker },
+  components: { CustomerPicker, ItemPicker },
 })
 export default class CreateNotes extends Vue {}
 </script>
