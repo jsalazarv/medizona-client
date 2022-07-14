@@ -53,9 +53,8 @@
               <td class="border-b border-gray-200 text-gray-900 text-sm flex">
                 <div class="flex align-middle">
                   <button
-                    :data-item-button="item.id"
                     class="mx-1 my-3 inline-block p-2 text-center text-white transition bg-green-400 rounded-full shadow ripple hover:shadow-lg hover:bg-green-500 focus:outline-none"
-                    @click="editNote(item.id)"
+                    @click="redirectToEdition(item.id)"
                   >
                     +
                   </button>
@@ -114,13 +113,16 @@ export default class Table extends Vue {
     this.list.splice(index, 1);
   }
 
-  editNote($id: number): void {
-    console.log("Editar nota", $id);
-  }
-
   redirectToCreation(): void {
     this.$router.push({
       name: "notes:create",
+    });
+  }
+
+  redirectToEdition(id: string): void {
+    this.$router.push({
+      name: "notes:edit",
+      params: { id: id },
     });
   }
 }

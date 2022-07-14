@@ -11,4 +11,10 @@ export default [
     component: () => import("@/views/notes/NoteList.vue"),
     meta: { public: false },
   },
+  {
+    path: "/notes/:id/edit",
+    name: "notes:edit",
+    component: () => import("@/views/notes/EditNotes.vue"),
+    meta: { public: false },
+  },
 ];
