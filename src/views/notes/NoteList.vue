@@ -7,6 +7,17 @@
         </div>
       </div>
     </div>
+    <button
+      class="mx-1 my-3 inline-block p-2 text-center text-white transition bg-blue-700 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
+      @click="showDialog"
+    >
+      +
+    </button>
+    <Dialog :open.sync="openDialog" text-btn-close="Cerrar">
+      <template v-slot:body>
+        <h1>Formulario</h1>
+      </template>
+    </Dialog>
   </div>
 </template>
 
@@ -16,9 +27,10 @@ import NoteService from "@/services/NoteService";
 import { IHeaders, IMeta } from "@/services/types";
 import { INoteQueryParams, INoteResponse } from "@/services/NoteService/types";
 import Table from "@/views/notes/components/Table/Table.vue";
+import Dialog from "@/views/notes/components/Dialog/Dialog.vue";
 
 @Component({
-  components: { Table },
+  components: { Dialog, Table },
 })
 export default class NoteList extends Vue {
   protected noteService = new NoteService();
@@ -34,6 +46,7 @@ export default class NoteList extends Vue {
     to: 1,
     total: 0,
   };
+  public openDialog = false;
 
   get filters(): INoteQueryParams {
     return {
@@ -65,6 +78,10 @@ export default class NoteList extends Vue {
       { text: "Total" },
       { text: "" },
     ];
+  }
+
+  showDialog(): void {
+    this.openDialog = true;
   }
 
   mounted(): void {

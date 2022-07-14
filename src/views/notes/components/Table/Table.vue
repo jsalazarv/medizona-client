@@ -1,10 +1,8 @@
 <template>
   <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-    <div class="shadow overflow-hidden sm:rounded-lg">
-      <table class="w-full leading-normal">
-        <thead
-          class="text-gray-600 text-xs border-gray tracking-wider text-left px-5 py-3 bg-gray-100 hover:cursor-pointer uppercase border-b-2 border-gray-200"
-        >
+    <div class="shadow overflow-hidden">
+      <table class="table">
+        <thead class="thead">
           <tr class="border-b border-gray">
             <th
               v-for="header in headers"
@@ -87,4 +85,6 @@ export default class Table extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import "styles.css";
+</style>
