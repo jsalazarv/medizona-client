@@ -9,12 +9,9 @@
       >
         <div class="grid grid-cols-5 gap-2">
           <div>
-            <select v-model="row.price">
-              <option
-                v-for="(item, index) in items"
-                :key="index"
-                :value="item.price"
-              >
+            <select v-model="row.details" @change="emitItemChange">
+              <option value=""></option>
+              <option v-for="(item, index) in items" :key="index" :value="item">
                 {{ item.name }}
               </option>
             </select>
@@ -23,7 +20,7 @@
             <input
               type="text"
               placeholder="Price"
-              v-model="row.price"
+              v-model="row.details.price"
               readonly
             />
           </div>
@@ -33,10 +30,11 @@
               placeholder="Quantity"
               v-model="row.quantity"
               min="1"
+              @change="emitItemChange"
             />
           </div>
           <div>
-            <span>{{ row.price * row.quantity }}</span>
+            <span>{{ row.details.price * row.quantity }}</span>
           </div>
           <div>
             <button v-if="rows.length >= 1" @click="deleteRow(indexRow)">
@@ -62,8 +60,10 @@ export default class ItemPicker extends Vue {
   public itemService = new ItemService();
   public rows = [
     {
-      select: 0,
-      price: 0,
+      details: {
+        id: null,
+        price: 0,
+      },
       quantity: 1,
     },
   ];
@@ -106,8 +106,10 @@ export default class ItemPicker extends Vue {
 
   addRow(): void {
     this.rows.push({
-      select: 1,
-      price: 0,
+      details: {
+        id: null,
+        price: 0,
+      },
       quantity: 1,
     });
   }
@@ -119,9 +121,18 @@ export default class ItemPicker extends Vue {
   get total(): number {
     let total = 0;
     for (const row of this.rows) {
-      total += row.price * row.quantity;
+      total += row.details.price * row.quantity;
     }
     return total;
+  }
+
+  emitItemChange(): void {
+    let items = this.rows.map((item) => ({
+      id: item.details.id,
+      quantity: Number(item.quantity),
+    }));
+
+    this.$emit("onChangeItems", items);
   }
 
   mounted(): void {
