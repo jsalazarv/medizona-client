@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <div class="flex flex-col mt-6">
-      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div class="shadow overflow-hidden sm:rounded-lg">
-            <Table :headers="headers" :list="noteList" />
-          </div>
+  <div class="flex justify-center">
+    <div class="container w-screen">
+      <div>
+        <div>
+          <Table :headers="headers" :list="noteList" />
         </div>
       </div>
     </div>
@@ -61,27 +59,11 @@ export default class NoteList extends Vue {
 
   get headers(): Array<IHeaders> {
     return [
-      {
-        text: "Id",
-        value: "id",
-        sortable: false,
-      },
-      {
-        text: "Customer",
-        value: "name",
-        sortable: false,
-      },
-      {
-        text: "Date",
-        value: "description",
-        sortable: false,
-      },
-      {
-        text: "Total",
-        value: "salary",
-        sortable: false,
-      },
-      { text: "", value: "actions", align: "end", sortable: false },
+      { text: "Id" },
+      { text: "Customer" },
+      { text: "Date" },
+      { text: "Total" },
+      { text: "" },
     ];
   }
 

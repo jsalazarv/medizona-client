@@ -42,10 +42,6 @@ export interface IQueryParams extends Record<string, unknown> {
 
 export interface IHeaders {
   text: string;
-  value: string;
-  align?: string;
-  width?: string;
-  sortable: boolean;
 }
 
 export interface ILanguage {
