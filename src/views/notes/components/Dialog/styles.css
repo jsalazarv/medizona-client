@@ -16,7 +16,7 @@
 }
 
 .modal-container {
-  @apply w-3/6;
+  @apply w-2/6;
   @apply bg-white;
   @apply border-2;
   margin: 0 auto;
