@@ -3,7 +3,7 @@
     <div class="container w-screen">
       <div>
         <div>
-          <Table :headers="headers" :list="noteList" />
+          <Table :headers="headers" :itemList.sync="noteList" />
         </div>
       </div>
     </div>
@@ -16,9 +16,10 @@ import NoteService from "@/services/NoteService";
 import { IHeaders, IMeta } from "@/services/types";
 import { INoteQueryParams, INoteResponse } from "@/services/NoteService/types";
 import Table from "@/views/notes/components/Table/Table.vue";
+import Dialog from "@/views/notes/components/Dialog/Dialog.vue";
 
 @Component({
-  components: { Table },
+  components: { Dialog, Table },
 })
 export default class NoteList extends Vue {
   protected noteService = new NoteService();

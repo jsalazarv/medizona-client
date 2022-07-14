@@ -1,0 +1,17 @@
+.table {
+  @apply w-full;
+  @apply leading-normal;
+}
+
+.thead {
+  @apply text-gray-600;
+  @apply text-xs;
+  @apply border-gray-100;
+  @apply tracking-wider;
+  @apply text-left;
+  @apply px-5;
+  @apply py-3;
+  @apply bg-gray-100;
+  @apply uppercase;
+  @apply border-gray-200;
+}

@@ -1,14 +1,12 @@
 <template>
   <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-    <div class="shadow overflow-hidden sm:rounded-lg">
-      <table class="w-full leading-normal">
-        <thead
-          class="text-gray-600 text-xs border-gray tracking-wider text-left px-5 py-3 bg-gray-100 hover:cursor-pointer uppercase border-b-2 border-gray-200"
-        >
+    <div class="shadow overflow-hidden">
+      <table class="table">
+        <thead class="thead">
           <tr class="border-b border-gray">
             <th
               v-for="header in headers"
-              :key="header.value"
+              :key="header.text"
               scope="col"
               class="text-gray-dark border-gray border-b-2 border-t-2 border-gray-200 py-3 px-3 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider"
             >
@@ -57,6 +55,7 @@
                   +
                 </button>
                 <button
+                  @click="deleteDialog(item.id)"
                   class="mx-1 my-3 inline-block p-2 text-center text-white transition bg-blue-700 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
                 >
                   +
@@ -67,24 +66,50 @@
         </tbody>
       </table>
     </div>
+    <Dialog
+      :open.sync="openDialog"
+      :data="itemID"
+      @onDelete="updateListAfterDelete"
+      text-btn-close="Cerrar"
+    >
+      <template v-slot:body>
+        <h1>Deseas eliminar esta nota?</h1>
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, PropSync, Vue } from "vue-property-decorator";
+import Dialog from "@/views/notes/components/Dialog/Dialog.vue";
+import { INoteResponse } from "@/services/NoteService/types";
+import { IHeaders } from "@/services/types";
 
-@Component({})
+@Component({
+  components: { Dialog },
+})
 export default class Table extends Vue {
   @Prop()
-  headers = [];
+  headers!: Array<IHeaders>;
 
-  @Prop()
-  list = [];
+  @PropSync("itemList", { default: () => [] })
+  list!: Array<INoteResponse>;
 
-  createNote($id: number): void {
-    console.log($id);
+  public openDialog = false;
+  public itemID: number | null = null;
+
+  deleteDialog($id: number): void {
+    this.openDialog = true;
+    this.itemID = $id;
+  }
+
+  updateListAfterDelete(id: number): void {
+    const index = this.list.findIndex((item) => item.id === id);
+    this.list.splice(index, 1);
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import "styles.css";
+</style>
