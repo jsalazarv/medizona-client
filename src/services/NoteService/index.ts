@@ -28,7 +28,7 @@ export default class NoteService extends BaseService {
     return this.client.put(`/notes/${note.id}`, note);
   }
 
-  delete(note: INoteRequest): INoContentResponse {
-    return this.client.delete<void>(`/notes/${note.id}`);
+  delete(id: number | null): INoContentResponse {
+    return this.client.delete<void>(`/notes/${id}`);
   }
 }

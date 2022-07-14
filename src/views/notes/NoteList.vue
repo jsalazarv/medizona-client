@@ -3,21 +3,10 @@
     <div class="container w-screen">
       <div>
         <div>
-          <Table :headers="headers" :list="noteList" />
+          <Table :headers="headers" :itemList.sync="noteList" />
         </div>
       </div>
     </div>
-    <button
-      class="mx-1 my-3 inline-block p-2 text-center text-white transition bg-blue-700 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
-      @click="showDialog"
-    >
-      +
-    </button>
-    <Dialog :open.sync="openDialog" text-btn-close="Cerrar">
-      <template v-slot:body>
-        <h1>Formulario</h1>
-      </template>
-    </Dialog>
   </div>
 </template>
 
@@ -46,7 +35,6 @@ export default class NoteList extends Vue {
     to: 1,
     total: 0,
   };
-  public openDialog = false;
 
   get filters(): INoteQueryParams {
     return {
@@ -78,10 +66,6 @@ export default class NoteList extends Vue {
       { text: "Total" },
       { text: "" },
     ];
-  }
-
-  showDialog(): void {
-    this.openDialog = true;
   }
 
   mounted(): void {
