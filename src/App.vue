@@ -1,32 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <nav id="nav" class="navbar shadow-md sticky top-0 z-50">
+      <div
+        class="container flex flex-wrap justify-between items-center mx-auto"
+      >
+        <a href="/" class="flex items-center">
+          <img
+            src="https://medizona.com.mx/images/logo-medizona-2-svg-white.svg"
+            class="mr-3 h-6 sm:h-14"
+            alt="medizona"
+          />
+        </a>
+        <div v-if="isAuthenticated">
+          <router-link to="/">Home</router-link> |
+          <router-link to="/notes">Notes</router-link> |
+          <a @click="logout">Logout</a>
+        </div>
+      </div>
+    </nav>
     <router-view />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import AuthService from "@/services/AuthService";
 
-#nav {
-  padding: 30px;
+@Component({})
+export default class App extends Vue {
+  protected authService = new AuthService();
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  get isAuthenticated(): boolean {
+    return this.$store.getters["auth/authenticated"];
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  logout(): void {
+    this.authService
+      .logout()
+      .then(() => {
+        this.$store.dispatch("auth/resetAccess");
+        this.$router.push({ name: "login" });
+      })
+      .catch()
+      .finally();
   }
 }
-</style>
+</script>
+
+<style lang="scss"></style>
