@@ -1,34 +1,43 @@
 <template>
   <ValidationObserver ref="form" v-slot="{ invalid }">
-    <div class="text-pink-600">
-      <div class="card">
-        <ValidationProvider name="email" rules="required">
-          <input
-            type="text"
-            required
-            autocomplete="off"
-            name="email"
-            placeholder="Email"
-            v-model="authData.email"
-          />
-        </ValidationProvider>
-        <ValidationProvider name="password" rules="required">
-          <input
-            type="password"
-            required
-            autocomplete="off"
-            name="password"
-            placeholder="Password"
-            v-model="authData.password"
-          />
-        </ValidationProvider>
-        <button
-          type="submit"
-          :disabled="invalid || isAuthenticating"
-          @click="login"
-        >
-          LOGIN
-        </button>
+    <div class="p-2 pt-10">
+      <div class="grid place-items-center">
+        <div class="card p-5">
+          <div class="card space-y-5">
+            <div>
+              <ValidationProvider name="email" rules="required">
+                <input
+                  type="text"
+                  required
+                  autocomplete="off"
+                  name="email"
+                  placeholder="Email"
+                  v-model="authData.email"
+                />
+              </ValidationProvider>
+            </div>
+            <div>
+              <ValidationProvider name="password" rules="required">
+                <input
+                  type="password"
+                  required
+                  autocomplete="off"
+                  name="password"
+                  placeholder="Password"
+                  v-model="authData.password"
+                />
+              </ValidationProvider>
+            </div>
+            <button
+              class="button-primary w-full"
+              type="submit"
+              :disabled="invalid || isAuthenticating"
+              @click="login"
+            >
+              LOGIN
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </ValidationObserver>
