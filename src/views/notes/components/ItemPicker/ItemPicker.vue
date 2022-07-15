@@ -116,6 +116,7 @@ export default class ItemPicker extends Vue {
 
   deleteRow(index: number): void {
     this.rows.splice(index, 1);
+    this.emitItemChange();
   }
 
   get total(): number {
