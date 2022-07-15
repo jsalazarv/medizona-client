@@ -1,10 +1,8 @@
 <template>
   <div class="flex justify-center">
     <div class="container w-screen">
-      <div>
-        <div>
-          <Table :headers="headers" :itemList.sync="noteList" />
-        </div>
+      <div class="mt-5">
+        <Table :headers="headers" :itemList.sync="noteList" />
       </div>
     </div>
   </div>

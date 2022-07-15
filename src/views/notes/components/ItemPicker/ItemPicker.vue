@@ -8,7 +8,7 @@
           <th>Item</th>
           <th>Quantity</th>
           <th class="text-right">Price</th>
-          <th class="text-right">Total</th>
+          <th class="text-right">Subtotal</th>
           <th></th>
         </tr>
       </thead>
@@ -35,10 +35,10 @@
             />
           </td>
           <td class="p-1 w-20 text-right">
-            <span>{{ row.price }}</span>
+            <span>${{ row.price }}</span>
           </td>
           <td class="p-1 w-20 text-right">
-            <span>{{ row.price * row.quantity }}</span>
+            <span>${{ row.price * row.quantity }}</span>
           </td>
           <td class="p-1 w-20 text-right">
             <button
@@ -63,7 +63,7 @@
         </tr>
         <tr>
           <td class="text-right" colspan="4">
-            <h2>Total: {{ total }}</h2>
+            <h2>Total: ${{ total }}</h2>
           </td>
           <td>
             <slot name="actions"></slot>

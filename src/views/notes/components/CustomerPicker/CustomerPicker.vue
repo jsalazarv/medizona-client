@@ -1,7 +1,7 @@
 <template>
   <div>
-    <select v-model="customerIndexSelected">
-      <option></option>
+    <select v-model="customerIndexSelected" value="-1">
+      <option disabled selected value="-1">Select a customer</option>
       <option
         v-for="(customer, index) in customerList"
         :key="index"
@@ -10,15 +10,12 @@
         {{ customer.name }}
       </option>
     </select>
-    <div
-      class="customer-info mt-5 space-y-3"
-      style="min-width: 400px; max-width: 700px"
-    >
+    <div class="customer-info mt-5 space-y-3">
       <p>
         <span class="font-black">Name:</span>
         {{ customerSelected.name }}
       </p>
-      <p>
+      <p class="break-normal" style="max-width: 700px">
         <span class="font-black">Address:</span>
         {{ customerSelected.address }}
       </p>

@@ -6,6 +6,10 @@ body {
   @apply bg-gray-50;
 }
 
+.dark body {
+  @apply bg-gray-900;
+}
+
 select,
 input {
   @apply bg-gray-50;
@@ -20,8 +24,17 @@ input {
   @apply p-2.5;
 }
 
+.dark input,
+.dark select {
+  @apply bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500;
+}
+
 .navbar {
   @apply bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded;
+}
+
+.dark .navbar {
+  @apply bg-gray-800 border-gray-700 text-white;
 }
 
 .center-right {
@@ -31,6 +44,10 @@ input {
 .card {
   @apply rounded overflow-hidden shadow-lg;
   @apply bg-white;
+}
+
+.dark .card {
+  @apply bg-gray-800 border-gray-700 text-white;
 }
 
 .button {
@@ -86,4 +103,15 @@ input {
   @apply ring-4;
   @apply outline-none;
   @apply bg-red-500;
+}
+
+.home h1 {
+  @apply font-thin;
+  @apply text-9xl;
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
 }

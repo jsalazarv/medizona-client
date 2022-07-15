@@ -25,6 +25,10 @@
   transition: all 0.3s ease;
 }
 
+.dark .modal-container {
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
 .modal-footer {
   overflow: hidden;
 }

@@ -1,25 +1,17 @@
 <template>
-  <div class="flex justify-center">
-    <div class="container w-screen">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden">
-          <div class="grid grid-cols-3">
-            <div class="col-span-1">
-              <CustomerPicker :customer.sync="customer" />
+  <div class="p-2 pt-10">
+    <div class="grid place-items-center">
+      <div class="card p-5 space-y-5">
+        <CustomerPicker :customer.sync="customer" />
+        <ItemPicker :items.sync="items">
+          <template v-slot:actions>
+            <div class="center-right">
+              <button class="button-primary text-xs" @click="saveNote">
+                SAVE
+              </button>
             </div>
-            <div>
-              <ItemPicker :items.sync="items" />
-            </div>
-          </div>
-          <div>
-            <button
-              class="modal-default-button mx-2 px-4 rounded-full inline-block p-2 text-white bg-blue-700 shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
-              @click="saveNote"
-            >
-              Guardar
-            </button>
-          </div>
-        </div>
+          </template>
+        </ItemPicker>
       </div>
     </div>
   </div>

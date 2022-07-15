@@ -3,6 +3,10 @@
   @apply leading-normal;
 }
 
+.dark .table {
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
 .thead {
   @apply text-gray-600;
   @apply text-xs;
@@ -14,4 +18,7 @@
   @apply bg-gray-100;
   @apply uppercase;
   @apply border-gray-200;
+}
+.dark .thead {
+  @apply bg-gray-900 border-gray-700 text-white;
 }

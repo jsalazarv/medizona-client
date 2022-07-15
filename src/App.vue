@@ -6,7 +6,7 @@
       >
         <a href="/" class="flex items-center">
           <img
-            src="https://medizona.com.mx/images/logo-medizona-2-svg.svg"
+            src="https://medizona.com.mx/images/logo-medizona-2-svg-white.svg"
             class="mr-3 h-6 sm:h-14"
             alt="medizona"
           />
