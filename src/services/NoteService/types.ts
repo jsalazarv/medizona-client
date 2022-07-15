@@ -13,6 +13,9 @@ export interface INoteResponse {
 
 export interface IItem {
   id: number | null;
+  name: string;
+  sku: string;
+  price: number;
   quantity: number;
 }
 

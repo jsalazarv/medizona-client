@@ -8,7 +8,7 @@
               <CustomerPicker :customer.sync="customer" />
             </div>
             <div>
-              <ItemPicker @onChangeItems="onChangeItems" />
+              <ItemPicker :items.sync="items" />
             </div>
           </div>
           <div>
@@ -45,10 +45,6 @@ export default class CreateNotes extends Vue {
     name: "",
     address: "",
   };
-
-  onChangeItems(items: Array<IItem>): void {
-    this.items = items;
-  }
 
   saveNote(): void {
     const payload: INoteRequest = {
