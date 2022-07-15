@@ -5,10 +5,10 @@
         <div class="shadow overflow-hidden">
           <div class="grid grid-cols-3">
             <div class="col-span-1">
-              <CustomerPicker @onChangeCustomer="customer" />
+              <CustomerPicker :customer.sync="customer" />
             </div>
             <div>
-              <ItemPicker @onChangeItems="items" />
+              <ItemPicker :items.sync="items" />
             </div>
           </div>
           <div>
@@ -31,32 +31,29 @@ import Component from "vue-class-component";
 import NoteService from "@/services/NoteService";
 import ItemPicker from "@/views/notes/components/ItemPicker/ItemPicker.vue";
 import CustomerPicker from "@/views/notes/components/CustomerPicker/CustomerPicker.vue";
-import { ICustomerResponse, IItem } from "@/services/CustomerService/types";
-import { INoteRequest } from "@/services/NoteService/types";
+import { IItem, INoteRequest } from "@/services/NoteService/types";
 
 @Component({
   components: { CustomerPicker, ItemPicker },
 })
 export default class CreateNotes extends Vue {
   protected noteService = new NoteService();
-  public payload: INoteRequest = {
-    customer_id: null,
-    date: new Date().toString(),
-    items: [],
+  public items: Array<IItem> = [];
+
+  public customer = {
+    id: null,
+    name: "",
+    address: "",
   };
 
-  customer(customer: ICustomerResponse): void {
-    this.payload.customer_id = customer.id;
-    this.payload.date = new Date().toString();
-  }
-
-  items(items: Array<IItem>): void {
-    this.payload.items = items;
-  }
-
   saveNote(): void {
+    const payload: INoteRequest = {
+      customer_id: this.customer.id,
+      date: new Date().toString(),
+      items: this.items,
+    };
     this.noteService
-      .create(this.payload)
+      .create(payload)
       .then((response) => {
         if (response.data.id) {
           this.$router.push({

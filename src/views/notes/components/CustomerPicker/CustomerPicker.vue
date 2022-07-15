@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Vue, Watch } from "vue-property-decorator";
+import { Component, Emit, PropSync, Vue, Watch } from "vue-property-decorator";
 import CustomerService from "@/services/CustomerService";
 import { IMeta } from "@/services/types";
 import { INoteQueryParams } from "@/services/NoteService/types";
@@ -33,11 +33,12 @@ export default class CustomerPicker extends Vue {
   protected customerService = new CustomerService();
   public customerList: Array<ICustomerResponse> = [];
   public customerIndexSelected: number | null = null;
-  public customerSelected: ICustomerResponse = {
-    id: null,
-    name: "",
-    address: "",
-  };
+
+  @PropSync("customer", {
+    default: () => ({ id: null, name: "", address: "" }),
+  })
+  public customerSelected!: ICustomerResponse;
+
   public date = new Date();
   public params = {
     query: "",
@@ -86,6 +87,24 @@ export default class CustomerPicker extends Vue {
       name: "",
       address: "",
     });
+  }
+
+  @Watch("customer")
+  onChangeCustomer(customer: ICustomerResponse) {
+    const index = this.customerList.findIndex(
+      (item) => item.id === customer.id
+    );
+
+    this.customerIndexSelected = index;
+  }
+
+  @Watch("customerList")
+  watchCustomerList(list) {
+    const index = list.findIndex(
+      (item) => item.id === this.customerSelected.id
+    );
+
+    this.customerIndexSelected = index;
   }
 
   @Emit("onChangeCustomer")

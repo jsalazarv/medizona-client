@@ -9,9 +9,13 @@
       >
         <div class="grid grid-cols-5 gap-2">
           <div>
-            <select v-model="row.details" @change="emitItemChange">
-              <option value=""></option>
-              <option v-for="(item, index) in items" :key="index" :value="item">
+            <select v-model="rows[indexRow]">
+              <option :value="row">{{ row.name }}</option>
+              <option
+                v-for="(item, index) in itemsList"
+                :key="index"
+                :value="item"
+              >
                 {{ item.name }}
               </option>
             </select>
@@ -20,7 +24,7 @@
             <input
               type="text"
               placeholder="Price"
-              v-model="row.details.price"
+              v-model="row.price"
               readonly
             />
           </div>
@@ -30,11 +34,10 @@
               placeholder="Quantity"
               v-model="row.quantity"
               min="1"
-              @change="emitItemChange"
             />
           </div>
           <div>
-            <span>{{ row.details.price * row.quantity }}</span>
+            <span>{{ row.price * row.quantity }}</span>
           </div>
           <div>
             <button v-if="rows.length >= 1" @click="deleteRow(indexRow)">
@@ -49,26 +52,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, PropSync, Vue } from "vue-property-decorator";
 import ItemService from "@/services/Items";
 import { IMeta } from "@/services/types";
-import { INoteQueryParams } from "@/services/NoteService/types";
+import { IItem, INoteQueryParams } from "@/services/NoteService/types";
 import { IItemResponse } from "@/services/Items/types";
 
 @Component({})
 export default class ItemPicker extends Vue {
   public itemService = new ItemService();
-  public rows = [
-    {
-      details: {
-        id: null,
-        price: 0,
-      },
-      quantity: 1,
-    },
-  ];
 
-  public items: Array<IItemResponse> = [];
+  @PropSync("items", {
+    default: () => [],
+  })
+  public rows!: Array<IItem>;
+
+  public itemsList: Array<IItemResponse> = [];
 
   public params = {
     query: "",
@@ -94,7 +93,10 @@ export default class ItemPicker extends Vue {
     this.itemService
       .getAll(filters)
       .then((response) => {
-        this.items = response.data;
+        this.itemsList = response.data.map((item) => ({
+          ...item,
+          quantity: 1,
+        }));
       })
       .catch()
       .finally();
@@ -106,10 +108,10 @@ export default class ItemPicker extends Vue {
 
   addRow(): void {
     this.rows.push({
-      details: {
-        id: null,
-        price: 0,
-      },
+      id: null,
+      name: "",
+      sku: "",
+      price: 0,
       quantity: 1,
     });
   }
@@ -121,18 +123,15 @@ export default class ItemPicker extends Vue {
   get total(): number {
     let total = 0;
     for (const row of this.rows) {
-      total += row.details.price * row.quantity;
+      total += row.price * row.quantity;
     }
     return total;
   }
 
-  emitItemChange(): void {
-    let items = this.rows.map((item) => ({
-      id: item.details.id,
-      quantity: Number(item.quantity),
-    }));
-
-    this.$emit("onChangeItems", items);
+  created(): void {
+    if (!this.rows.length) {
+      this.addRow();
+    }
   }
 
   mounted(): void {
