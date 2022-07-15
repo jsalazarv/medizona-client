@@ -5,10 +5,10 @@
         <div class="shadow overflow-hidden">
           <div class="grid grid-cols-3">
             <div class="col-span-1">
-              <CustomerPicker @onChangeCustomer="customer" />
+              <CustomerPicker :customer.sync="customer" />
             </div>
             <div>
-              <ItemPicker @onChangeItems="items" />
+              <ItemPicker :items.sync="items" />
             </div>
           </div>
           <div>
@@ -31,42 +31,41 @@ import Component from "vue-class-component";
 import NoteService from "@/services/NoteService";
 import CustomerPicker from "@/views/notes/components/CustomerPicker/CustomerPicker.vue";
 import ItemPicker from "@/views/notes/components/ItemPicker/ItemPicker.vue";
-import { INoteRequest } from "@/services/NoteService/types";
-import { ICustomerResponse, IItem } from "@/services/CustomerService/types";
+import { IItem, INoteRequest } from "@/services/NoteService/types";
+import { ICustomerResponse } from "@/services/CustomerService/types";
 
 @Component({
   components: { ItemPicker, CustomerPicker },
 })
 export default class EditNotes extends Vue {
   protected noteService = new NoteService();
-  public payload: INoteRequest = {
-    customer_id: null,
-    date: new Date().toString(),
-    items: [],
+  public items: Array<IItem> = [];
+  public customer: ICustomerResponse = {
+    id: null,
+    name: "",
+    address: "",
   };
 
   getNoteInfo(): void {
     this.noteService
       .find(this.$route.params.id)
       .then((response) => {
-        console.log(response);
+        this.customer = response.data.customer;
+        this.items = response.data.items as Array<IItem>;
       })
       .catch()
       .finally();
   }
 
-  customer(customer: ICustomerResponse): void {
-    this.payload.customer_id = customer.id;
-    this.payload.date = new Date().toString();
-  }
-
-  items(items: Array<IItem>): void {
-    this.payload.items = items;
-  }
-
   saveNote(): void {
+    const payload: INoteRequest = {
+      id: Number(this.$route.params.id),
+      customer_id: this.customer.id,
+      date: new Date().toString(),
+      items: this.items,
+    };
     this.noteService
-      .update(this.payload)
+      .update(payload)
       .then((response) => {
         if (response.data.id) {
           this.$router.push({
