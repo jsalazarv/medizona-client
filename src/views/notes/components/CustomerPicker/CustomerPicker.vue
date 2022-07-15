@@ -1,22 +1,24 @@
 <template>
-  <div class="container">
-    <div class="grid grid-cols-1">
-      <div>
-        <select v-model="customerIndexSelected">
-          <option></option>
-          <option
-            v-for="(customer, index) in customerList"
-            :key="index"
-            :value="index"
-          >
-            {{ customer.name }}
-          </option>
-        </select>
-        <div>
-          <span>{{ customerSelected.name }}</span>
-          <span>{{ customerSelected.address }}</span>
-        </div>
-      </div>
+  <div>
+    <select v-model="customerIndexSelected" value="-1">
+      <option disabled selected value="-1">Select a customer</option>
+      <option
+        v-for="(customer, index) in customerList"
+        :key="index"
+        :value="index"
+      >
+        {{ customer.name }}
+      </option>
+    </select>
+    <div class="customer-info mt-5 space-y-3">
+      <p>
+        <span class="font-black">Name:</span>
+        {{ customerSelected.name }}
+      </p>
+      <p class="break-normal" style="max-width: 700px">
+        <span class="font-black">Address:</span>
+        {{ customerSelected.address }}
+      </p>
     </div>
   </div>
 </template>

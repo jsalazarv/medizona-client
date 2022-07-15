@@ -1,7 +1,7 @@
 import { IApp } from "@/config/types";
 
 const app: IApp = {
-  name: "OOLA RH",
+  name: "Medizona",
 };
 
 export default app;

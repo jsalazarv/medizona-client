@@ -1,14 +1,20 @@
 <template>
-  <div class="container">
-    <div class="col-end-12">
-      <button type="submit" @click="addRow">Add Item</button>
-      <div
-        class="grid grid-flow-col auto-cols-max"
-        v-for="(row, indexRow) in rows"
-        :key="indexRow"
-      >
-        <div class="grid grid-cols-5 gap-2">
-          <div>
+  <div>
+    <button class="button-success" type="submit" @click="addRow">ADD</button>
+
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th class="text-right">Price</th>
+          <th class="text-right">Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, indexRow) in rows" :key="indexRow">
+          <td class="p-1">
             <select v-model="rows[indexRow]">
               <option :value="row">{{ row.name }}</option>
               <option
@@ -19,35 +25,52 @@
                 {{ item.name }}
               </option>
             </select>
-          </div>
-          <div>
-            <input
-              type="text"
-              placeholder="Price"
-              v-model="row.price"
-              readonly
-            />
-          </div>
-          <div>
+          </td>
+          <td class="p-1 w-20">
             <input
               type="number"
               placeholder="Quantity"
               v-model="row.quantity"
               min="1"
             />
-          </div>
-          <div>
-            <span>{{ row.price * row.quantity }}</span>
-          </div>
-          <div>
-            <button v-if="rows.length >= 1" @click="deleteRow(indexRow)">
-              X
+          </td>
+          <td class="p-1 w-20 text-right">
+            <span>${{ row.price }}</span>
+          </td>
+          <td class="p-1 w-20 text-right">
+            <span>${{ row.price * row.quantity }}</span>
+          </td>
+          <td class="p-1 w-20 text-right">
+            <button
+              class="button-danger text-xs"
+              v-if="rows.length >= 1"
+              @click="deleteRow(indexRow)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </button>
-          </div>
-        </div>
-      </div>
-      <h2>Total: {{ total }}</h2>
-    </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-right" colspan="4">
+            <h2>Total: ${{ total }}</h2>
+          </td>
+          <td>
+            <slot name="actions"></slot>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

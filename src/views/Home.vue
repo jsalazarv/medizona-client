@@ -1,5 +1,7 @@
 <template>
-  <div class="home">Medizona</div>
+  <div class="home">
+    <h1>Medizona</h1>
+  </div>
 </template>
 
 <script lang="ts">

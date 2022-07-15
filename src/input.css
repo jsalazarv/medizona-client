@@ -1,3 +1,117 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-gray-50;
+}
+
+.dark body {
+  @apply bg-gray-900;
+}
+
+select,
+input {
+  @apply bg-gray-50;
+  @apply border;
+  @apply border-gray-300;
+  @apply text-gray-900;
+  @apply text-sm;
+  @apply rounded-lg;
+  @apply focus:ring-blue-500;
+  @apply focus:border-blue-500;
+  @apply block w-full;
+  @apply p-2.5;
+}
+
+.dark input,
+.dark select {
+  @apply bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500;
+}
+
+.navbar {
+  @apply bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded;
+}
+
+.dark .navbar {
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
+.center-right {
+  @apply flex items-center justify-end;
+}
+
+.card {
+  @apply rounded overflow-hidden shadow-lg;
+  @apply bg-white;
+}
+
+.dark .card {
+  @apply bg-gray-800 border-gray-700 text-white;
+}
+
+.button {
+  @apply py-2;
+  @apply px-3;
+  @apply text-xs;
+  @apply font-medium;
+  @apply text-center;
+  @apply text-white;
+  @apply rounded-lg;
+}
+
+.button-primary {
+  @apply button;
+  @apply bg-blue-700;
+}
+
+.button-primary:hover {
+  @apply bg-blue-800;
+}
+
+.button-primary:focus {
+  @apply ring-4;
+  @apply outline-none;
+  @apply ring-blue-300;
+}
+
+.button-success {
+  @apply button;
+  @apply bg-green-400;
+}
+
+.button-success:hover {
+  @apply bg-green-500;
+}
+
+.button-success:focus {
+  @apply ring-4;
+  @apply outline-none;
+  @apply bg-green-500;
+}
+
+.button-danger {
+  @apply button;
+  @apply bg-red-400;
+}
+
+.button-danger:hover {
+  @apply bg-red-500;
+}
+
+.button-danger:focus {
+  @apply ring-4;
+  @apply outline-none;
+  @apply bg-red-500;
+}
+
+.home h1 {
+  @apply font-thin;
+  @apply text-9xl;
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af;
+}
