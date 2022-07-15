@@ -26,7 +26,12 @@ input {
 
 .dark input,
 .dark select {
-  @apply bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500;
+  @apply bg-gray-700 border-gray-700 placeholder-gray-400 text-white;
+}
+
+.dark input:focus,
+.dark select:focus {
+  @apply bg-gray-700 border-gray-700 placeholder-gray-400 text-white;
 }
 
 .navbar {

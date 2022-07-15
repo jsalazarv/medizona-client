@@ -11,14 +11,40 @@
             alt="medizona"
           />
         </a>
-        <div>
+        <div v-if="isAuthenticated">
           <router-link to="/">Home</router-link> |
-          <router-link to="/notes">Notes</router-link>
+          <router-link to="/notes">Notes</router-link> |
+          <a @click="logout">Logout</a>
         </div>
       </div>
     </nav>
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import AuthService from "@/services/AuthService";
+
+@Component({})
+export default class App extends Vue {
+  protected authService = new AuthService();
+
+  get isAuthenticated(): boolean {
+    return this.$store.getters["auth/authenticated"];
+  }
+
+  logout(): void {
+    this.authService
+      .logout()
+      .then(() => {
+        this.$store.dispatch("auth/resetAccess");
+        this.$router.push({ name: "login" });
+      })
+      .catch()
+      .finally();
+  }
+}
+</script>
 
 <style lang="scss"></style>
